@@ -104,6 +104,7 @@ A. **로컬 환경 검증** (Windows 사용자 직접 수행)
 | 2026-04-27 | Import 컨벤션: `from stt.X import ...` | `from src...` 금지 (CLAUDE.md 반영) |
 | 2026-04-27 | 의존성 관리: `pyproject.toml` | requirements.txt보다 모던, 도구 설정 통합 가능 |
 | 2026-04-27 | 린터·포매터: `ruff` 단일화 | black + isort + flake8 통합, 가장 빠름 |
+| 2026-04-27 | 실행 환경: **WSL (Ubuntu)** | KIS API 크로스플랫폼·ML 라이브러리 호환·키움(Windows COM) 의존성 회피 |
 
 ---
 

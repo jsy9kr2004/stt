@@ -25,11 +25,13 @@
 
 ## 빠른 시작
 
+> 메인 개발 환경: **WSL (Ubuntu)**. 데이터 파일은 WSL 리눅스 파일시스템(`~/...`)에 두기를 권장 (`/mnt/c/...`는 디스크 IO가 느림).
+
 ```bash
 # 가상환경 생성
-python -m venv .venv
-source .venv/bin/activate            # macOS/Linux
-.venv\Scripts\activate               # Windows
+python3 -m venv .venv
+source .venv/bin/activate            # WSL / macOS / Linux
+# .venv\Scripts\activate             # (Windows 네이티브 시)
 
 # 의존성 설치 (편집 가능 모드)
 pip install -e ".[dev]"
