@@ -34,7 +34,7 @@
 | 외부 접근 | Tailscale VPN |
 | 알림 | Web Push API (VAPID) |
 
-## 디렉토리 구조 (예정)
+## 디렉토리 구조 (src layout)
 
 ```
 stt/
@@ -43,20 +43,30 @@ stt/
 │   ├── features/        # 피처 엔지니어링 결과
 │   └── labels/          # Triple Barrier 라벨
 ├── src/
-│   ├── collectors/      # KIS, pykrx, DART 데이터 수집
-│   ├── features/        # 피처 엔지니어링
-│   ├── labels/          # Triple Barrier 라벨링
-│   ├── models/          # 학습·추론
-│   ├── backtest/        # 워크포워드 백테스트
-│   ├── api/             # FastAPI 서버 (Phase 2)
-│   └── notifier/        # 웹푸시 (Phase 2)
-├── notebooks/           # 분석·실험
-├── tests/
+│   └── stt/             # 메인 패키지 (import 시 `from stt.X import ...`)
+│       ├── __init__.py
+│       ├── config.py        # pydantic-settings 기반 설정
+│       ├── logging_setup.py # loguru 기본 설정
+│       ├── collectors/      # KIS, pykrx, DART 데이터 수집
+│       ├── features/        # 피처 엔지니어링
+│       ├── labels/          # Triple Barrier 라벨링
+│       ├── models/          # 학습·추론
+│       ├── backtest/        # 워크포워드 백테스트
+│       ├── api/             # FastAPI 서버 (Phase 2)
+│       └── notifier/        # 웹푸시 (Phase 2)
+├── notebooks/           # 분석·실험 (.gitkeep)
+├── tests/               # pytest
 ├── frontend/            # React 앱 (Phase 2)
+├── pyproject.toml       # 의존성·도구 설정
+├── .env.example         # 환경 변수 템플릿
+├── .gitignore
+├── README.md
 ├── plan.md              # 전체 설계 문서
 ├── STATE.md             # 현재 진행 상황 (반드시 갱신)
 └── CLAUDE.md            # 이 파일
 ```
+
+> **Import 규칙**: 항상 `from stt.<sub> import <X>` 형태. `from src...` 금지.
 
 ## 작업 규칙
 
@@ -75,7 +85,7 @@ stt/
 - **각 모듈은 단위 테스트와 함께** 작성. 테스트 없는 코드는 신뢰 불가.
 - **타입 힌트 적극 사용**. 특히 데이터 형태(DataFrame 컬럼 명세).
 - **함수는 짧게**. 한 함수가 한 가지 일만.
-- **상수는 `src/config.py`에** 모아두기. 매직 넘버 금지.
+- **상수·설정은 `stt.config.settings`에** 모아두기. 매직 넘버 금지.
 - **로깅은 loguru**로 통일.
 - **새 의존성 추가 시 STATE.md에 기록**.
 

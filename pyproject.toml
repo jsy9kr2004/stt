@@ -1,0 +1,92 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stt"
+version = "0.1.0"
+description = "한국 주식 단타 ML 보조 시스템 (Short Term Trading)"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Proprietary" }
+
+dependencies = [
+    # 데이터 수집
+    "pykrx>=1.0.45",
+    "httpx>=0.27",
+    "websockets>=12.0",
+
+    # 데이터 처리·저장
+    "pandas>=2.2",
+    "polars>=1.0",
+    "numpy>=1.26",
+    "pyarrow>=15.0",
+
+    # 기술적 지표 / ML
+    "pandas-ta>=0.3.14b",
+    "lightgbm>=4.3",
+    "scikit-learn>=1.4",
+    "optuna>=3.6",
+    "shap>=0.45",
+
+    # 백엔드 (Phase 2)
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.29",
+
+    # 설정·로깅·스케줄
+    "pydantic>=2.6",
+    "pydantic-settings>=2.2",
+    "loguru>=0.7",
+    "apscheduler>=3.10",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "ruff>=0.4",
+    "mypy>=1.10",
+    "ipykernel>=6.29",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["stt*"]
+
+[tool.setuptools.package-dir]
+"" = "src"
+
+# ─── ruff ─────────────────────────────────────────────────────────────────
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E", "F", "W",  # pycodestyle / pyflakes
+    "I",            # isort
+    "UP",           # pyupgrade
+    "B",            # bugbear
+    "SIM",          # simplify
+    "RUF",          # ruff-specific
+]
+ignore = [
+    "E501",  # line too long (formatter handles)
+]
+
+[tool.ruff.format]
+quote-style = "double"
+
+# ─── pytest ───────────────────────────────────────────────────────────────
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra --strict-markers"
+
+# ─── mypy ─────────────────────────────────────────────────────────────────
+[tool.mypy]
+python_version = "3.11"
+strict = false
+ignore_missing_imports = true
